@@ -1,0 +1,30 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _rQ1e8MnjEeKiNNBJ9FzdxA,__LYUscv6EeKdn9NxGuJvMw,_sOWbQMwAEeKdn9NxGuJvMw
+Element-Name: Execute StackSpec
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1LZoEMv7EeKdn9NxGuJvMw
+Q7-Runtime-Version: 1.3.3.201305250831
+Save-Time: 6/3/13 11:25 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+listen errorLog {
+	get-view "Package Explorer" | get-tree | select "q7-scalatest-demo/src\\/test\\/scala/q7.scalatest.demo/StackSpec.scala"
+	get-view "Package Explorer" | get-tree | get-menu "Run As/\\d+ ScalaTest - File" | click
+	
+	with [get-view ScalaTest] {
+	    get-editbox -after [get-label "Succeeded:"] | get-property text | equals 2 | verify-true
+	    get-editbox -after [get-label "Failed:"] | get-property text | equals 0 | verify-true
+	    with [get-tree] {
+	        get-item "StackSpec.*/A Stack" | get-property childCount | equals 2 | verify-true
+	    }
+	}
+} | assert-empty
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
